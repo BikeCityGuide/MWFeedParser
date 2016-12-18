@@ -603,6 +603,11 @@
                         else if ([currentPath isEqualToString:@"/rss/channel/item/pubDate"]) { if (processedText.length > 0) item.date = [NSDate dateFromInternetDateTimeString:processedText formatHint:DateFormatHintRFC822]; processed = YES; }
                         else if ([currentPath isEqualToString:@"/rss/channel/item/enclosure"]) { [self createEnclosureFromAttributes:currentElementAttributes andAddToItem:item]; processed = YES; }
                         else if ([currentPath isEqualToString:@"/rss/channel/item/dc:date"]) { if (processedText.length > 0) item.date = [NSDate dateFromInternetDateTimeString:processedText formatHint:DateFormatHintRFC3339]; processed = YES; }
+                        else if ([currentPath isEqualToString:@"/rss/channel/item/media:content"]) {
+                            if ([self.currentElementAttributes objectForKey:@"url"])
+                                item.image = self.currentElementAttributes[@"url"];
+                            processed =    YES;
+                        }
                     }
                     
                     // Info
@@ -622,6 +627,7 @@
                     
                     // Item
                     if (!processed) {
+                        NSLog(@"RSS1 %@ - %@", currentPath, processedText);
                         if ([currentPath isEqualToString:@"/rdf:RDF/item/title"]) { if (processedText.length > 0) item.title = processedText; processed = YES; }
                         else if ([currentPath isEqualToString:@"/rdf:RDF/item/link"]) { if (processedText.length > 0) item.link = processedText; processed = YES; }
                         else if ([currentPath isEqualToString:@"/rdf:RDF/item/description"]) { if (processedText.length > 0) item.summary = processedText; processed = YES; }

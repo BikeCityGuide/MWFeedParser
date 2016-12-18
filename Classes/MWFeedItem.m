@@ -59,6 +59,7 @@
 		summary = [decoder decodeObjectForKey:@"summary"];
 		content = [decoder decodeObjectForKey:@"content"];
 		author = [decoder decodeObjectForKey:@"author"];
+        image = [decoder decodeObjectForKey:@"media:content"];
 		enclosures = [decoder decodeObjectForKey:@"enclosures"];
 	}
 	return self;
@@ -73,6 +74,7 @@
 	if (summary) [encoder encodeObject:summary forKey:@"summary"];
 	if (content) [encoder encodeObject:content forKey:@"content"];
 	if (author) [encoder encodeObject:author forKey:@"author"];
+    if (image) [encoder encodeObject:image forKey:@"media:content"];
 	if (enclosures) [encoder encodeObject:enclosures forKey:@"enclosures"];
 }
 
